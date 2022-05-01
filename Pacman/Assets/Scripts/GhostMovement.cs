@@ -11,9 +11,9 @@ public class GhostMovement : MonoBehaviour
     private void Update()
     {
         if (GameManager.sharedInstance.invincibleTime > 0)
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            GetComponent<Animator>().SetBool("Pacman Inv", true);
         else
-            GetComponent<SpriteRenderer>().color = Color.white;
+            GetComponent<Animator>().SetBool("Pacman Inv", false);
     }
     private void FixedUpdate()
     {
@@ -45,6 +45,14 @@ public class GhostMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
         if (otherCollider.tag == "Player")
-            Destroy(otherCollider.gameObject);
+            if(GameManager.sharedInstance.invincibleTime <=0)
+                Destroy(otherCollider.gameObject);
+            else
+            {
+                GameObject home = GameObject.Find("Ghost Home");
+                this.transform.position = home.transform.position;
+                this.currentWaypoint = 0;
+                UIManager.sharedInstance.ScorePoints(1000);
+            }    
     }
 }

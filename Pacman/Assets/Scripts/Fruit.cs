@@ -10,7 +10,7 @@ public class Fruit : MonoBehaviour
         if (collision.tag == "Player")
         {
             UIManager.sharedInstance.ScorePoints(500);
-            GameManager.sharedInstance.MakeInvincibleFor(15.0f);
+            GameManager.sharedInstance.MakeInvincibleFor(5.0f);
             Destroy(this.gameObject);
         }
     }
